@@ -1,0 +1,36 @@
+name: Flutter Web Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main  # deploy when pushing to main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.13.10'  # match your Flutter version
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build Flutter Web
+        run: flutter build web --release
+
+      - name: Deploy to cPanel via SFTP
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USER }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          port: 22
+          source: "build/web/*"
+          target: ${{ secrets.CPANEL_PATH }}
+          strip_components: 1
