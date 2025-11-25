@@ -1,75 +1,3 @@
-# # name: Deploy Flutter Web via FTP
-
-# # on:
-# #   push:
-# #     branches:
-# #       - main # Only deploy when pushing to main branch
-
-# # jobs:
-# #   build-and-upload:
-# #     runs-on: ubuntu-latest
-
-# #     steps:
-# #       - name: Checkout repository
-# #         uses: actions/checkout@v3
-
-# #       - name: Setup Flutter
-# #         uses: subosito/flutter-action@v2
-# #         with:
-# #           flutter-version: "3.35.7" # Replace with your Flutter version
-
-# #       - name: Install dependencies
-# #         run: flutter pub get
-
-# #       - name: Build Flutter Web
-# #         run: flutter build web --release
-
-# #       - name: Deploy via FTP
-# #         uses: SamKirkland/FTP-Deploy-Action@4.3.0
-# #         with:
-# #           server: ${{ secrets.FTP_HOST }}
-# #           username: ${{ secrets.FTP_USERNAME }}
-# #           password: ${{ secrets.FTP_PASSWORD }}
-# #           local-dir: build/web/
-# #           server-dir:
-# #           protocol: ftp
-# #           port: 21
-# name: Deploy Flutter Web to FTP
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout repo
-#         uses: actions/checkout@v3
-
-#       - name: Setup Flutter
-#         uses: subosito/flutter-action@v2
-#         with:
-#           flutter-version: "3.35.7" # Use the same version as your machine
-
-#       - name: Flutter pub get
-#         run: flutter pub get
-
-#       - name: Build Flutter Web
-#         run: flutter build web --release
-
-#       - name: Upload to FTP
-#         uses: SamKirkland/FTP-Deploy-Action@4.3.3
-#         with:
-#           server: ${{ secrets.FTP_HOST }} # Must exist in GitHub Secrets
-#           username: ${{ secrets.FTP_USERNAME }} # Must exist in GitHub Secrets
-#           password: ${{ secrets.FTP_PASSWORD }} # Must exist in GitHub Secrets
-#           protocol: ftp
-#           port: 21
-#           local-dir: build/web/
-#           server-dir: /
 name: Deploy Flutter Web to FTP
 
 on:
@@ -99,7 +27,6 @@ jobs:
       - name: Build Flutter Web
         run: flutter build web --release
 
-      # Step 5: Deploy via FTP
       - name: Deploy to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.3.3
         with:
