@@ -3,11 +3,7 @@ name: Flutter Web Deploy to cPanel
 on:
   push:
     branches:
-<<<<<<< HEAD
       - main  # deploy when pushing to main branch
-=======
-      - main # deploy when pushing to main branch
->>>>>>> d858a6f (Add Flutter Web deploy workflow)
 
 jobs:
   build-and-deploy:
@@ -20,11 +16,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-<<<<<<< HEAD
           flutter-version: '3.13.10'  # match your Flutter version
-=======
-          flutter-version: "3.13.10" # match your Flutter version
->>>>>>> d858a6f (Add Flutter Web deploy workflow)
 
       - name: Install dependencies
         run: flutter pub get
