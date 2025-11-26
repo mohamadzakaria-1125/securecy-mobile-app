@@ -1,9 +1,9 @@
-name: Deploy Flutter Web to cPanel
+name: Deploy Flutter Web via FTP
 
 on:
   push:
     branches:
-      - main   # change if your repo uses 'master'
+      - main # change if your repo uses 'master'
 
 jobs:
   build-and-deploy:
@@ -34,4 +34,3 @@ jobs:
           localDir: build/web
           remoteDir: ${{ secrets.FTP_REMOTE_DIR }}
           options: "--ssl"
-  
