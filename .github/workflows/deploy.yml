@@ -1,38 +1,69 @@
-name: Deploy Flutter Web to FTP
+# name: Deploy Flutter Web to FTP
+
+# on:
+#   push:
+#     branches:
+#       - main # run this workflow on push to main branch
+
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       # Step 1: Checkout the repo
+#       - uses: actions/checkout@v3
+
+#       # Step 2: Set up Flutter
+#       - name: Setup Flutter
+#         uses: subosito/flutter-action@v2
+#         with:
+#           flutter-version: "3.35.7" # adjust if needed
+
+#       # Step 3: Install dependencies
+#       - name: Install dependencies
+#         run: flutter pub get
+
+#       # Step 4: Build Flutter web
+#       - name: Build Flutter Web
+#         run: flutter build web --release
+
+#       - name: Deploy to FTP
+#         uses: SamKirkland/FTP-Deploy-Action@4.3.3
+#         with:
+#
+#           port: 21
+#           local-dir: build/web/
+#           server-dir: /
+name: Deploy Flutter Web via FTP
 
 on:
   push:
-    branches:
-      - main # run this workflow on push to main branch
+    branches: ["main"]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the repo
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      # Step 2: Set up Flutter
-      - name: Setup Flutter
+      - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.35.7" # adjust if needed
+          channel: "stable"
 
-      # Step 3: Install dependencies
-      - name: Install dependencies
-        run: flutter pub get
-
-      # Step 4: Build Flutter web
       - name: Build Flutter Web
         run: flutter build web --release
 
-      - name: Deploy to FTP
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+      - name: Upload build to cPanel via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
-          server: ${{ secrets.FTP_SERVER }}
+          server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftp
           port: 21
-          local-dir: build/web/
-          server-dir: /
+          local-dir: build/web
+          server-dir: ${{ secrets.FTP_PATH }}
+          dangerous-clean-slate: true

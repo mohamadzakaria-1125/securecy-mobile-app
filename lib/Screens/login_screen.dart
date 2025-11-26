@@ -485,7 +485,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       const SizedBox(height: 20),
                       const Text(
-                        'Welcome Back test for github!',
+                        'Welcome Back test for github!testnjareb',
                         style: TextStyle(
                           fontSize: 27,
                           fontWeight: FontWeight.bold,
